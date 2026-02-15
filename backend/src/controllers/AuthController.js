@@ -1,6 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body || {};
@@ -47,6 +48,16 @@ export const signup = async (req, res) => {
 
     // Persist user before issuing token to avoid stale references
     generateToken(createdUser._id, res);
+
+    try{
+      await sendWelcomeEmail(createdUser.email, {
+        fullName: createdUser.fullName,
+        appName: "Chat App",
+        clientUrl: process.env.CLIENT_URL || ""
+      });
+    }catch(err){
+      console.error("Error sending welcome email:", err);
+    }
 
     return res.status(201).json({
       _id: createdUser._id,
