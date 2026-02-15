@@ -1,0 +1,7 @@
+# Example direct connection string for MongoDB Atlas
+# Replace <PASSWORD> with your actual password
+# Replace <dbname> with your database name
+
+MONGO_URI=mongodb://codecuratrix_db_user:<PASSWORD>@ac-zpjs8-shard-00-00.c7y6uxp.mongodb.net:27017,ac-zpjs8-shard-00-01.c7y6uxp.mongodb.net:27017,ac-zpjs8-shard-00-02.c7y6uxp.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-zzzzzz-shard-0&authSource=admin&retryWrites=true&w=majority
+
+# You can get this from Atlas > Connect > Standard connection string (not SRV)
