@@ -130,3 +130,34 @@ export const logout = (req, res) => {
   });
   res.status(200).json({ message: "Logged out successfully" });
 };
+
+export const updateProfile = async (req, res) => {
+  const { fullName, profilePic } = req.body || {};
+  const userId = req.userId;
+  
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { fullName, profilePic },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      fullName: updatedUser.fullName,
+      email: updatedUser.email,
+      profilePic: updatedUser.profilePic
+    });
+  } catch (err) {
+    console.error("Update profile error:", err);
+    res.status(500).json({
+      message: "Server error during profile update"
+    });
+  }
+};
