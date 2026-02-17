@@ -34,9 +34,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Enforce unique index at the database level
-userSchema.index({ email: 1 }, { unique: true });
-
 // Ensure password comes back when needed explicitly
 userSchema.methods.getPassword = function () {
   return this.password;
