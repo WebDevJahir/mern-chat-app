@@ -109,7 +109,7 @@ export const welcomeEmail = ({ fullName = "there", appName = "Chat App", clientU
 
 	return {
 		subject,
-		html: htmlBody,
-		text: textBody
+		htmlBody,
+		textBody
 	};
 };

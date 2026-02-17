@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { ENV } from "./env.js";
 
 let cachedConnection = null;
 
 const buildConnectionOptions = () => ({
     bufferCommands: false,
-    autoIndex: process.env.NODE_ENV !== "production",
+    autoIndex: ENV.NODE_ENV !== "production",
     maxPoolSize: 10,
     serverSelectionTimeoutMS: 5000
 });
@@ -14,7 +15,7 @@ const connectDB = async () => {
         return cachedConnection;
     }
 
-    const mongoUri = process.env.MONGO_URI?.trim();
+    const mongoUri = ENV.MONGO_URI?.trim();
     if (!mongoUri) {
         throw new Error("MONGO_URI environment variable is required");
     }
